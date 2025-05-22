@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Redirigiendo a la app...</title>
-    <meta http-equiv="refresh" content="0; url=miapp://publicacion?id=XYZ" />
+    <meta charset="UTF-8">
+    <title>Redireccionando...</title>
+    <script>
+      // Leer parámetro `id` de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+
+      // Redirigir al esquema de la app
+      if (id) {
+        window.location.href = `miapp://publicacion?id=${id}`;
+      } else {
+        // Si no hay id, redirigir al home
+        window.location.href = `miapp://publicacion`;
+      }
+
+      // Por si falla, mostrar botón
+      setTimeout(() => {
+        document.getElementById("fallback").style.display = "block";
+      }, 2000);
+    </script>
   </head>
   <body>
-    <p>Si no eres redirigido automáticamente, haz clic <a href="miapp://publicacion?id=XYZ">aquí</a>.</p>
+    <p>Abriendo la app...</p>
+    <div id="fallback" style="display:none;">
+      <p>Si no se abre, <a href="https://play.google.com/store/apps/details?id=tu.paquete.app">descarga la app aquí</a>.</p>
+    </div>
   </body>
 </html>
